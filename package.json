@@ -35,7 +35,6 @@
     "morgan": "^1.10.0",
     "node": "^16.4.0",
     "nodemon": "^2.0.9",
-    "puppeteer": "^10.1.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6"
   },

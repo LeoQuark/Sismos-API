@@ -4,7 +4,9 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 
 //Rutas
-import earthquakes from "./routes/earthquakes";
+import earthquakesRoutes from "./routes/earthquakes";
+import authRoutes from "./routes/auth";
+import userRoutes from "./routes/user";
 
 //Variables ocultas .env
 dotenv.config();
@@ -20,7 +22,9 @@ app.use(express.json());
 app.use(cors());
 
 //Rutas iniciales de la API
-app.use("/api", earthquakes);
+app.use("/api", earthquakesRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/usuario", userRoutes);
 
 //Se declara el puerto en el que correrá el servidor por medio de .env o asignandole por defecto el port:4000
 const PORT = process.env.PORT || 4000;
