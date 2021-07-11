@@ -13,7 +13,7 @@ export const getSismos = async (req, res) => {
 
     $("tbody tr")
       .next()
-      .each((i, el) => {
+      .each( (i, el) => {
         const sismos = [];
 
         let aux = {
@@ -39,7 +39,7 @@ export const getSismos = async (req, res) => {
               //console.log(j, $(il).html());
             }
           });
-
+        
         aux.fecha_local = sismos[0];
         aux.fecha_utc = sismos[1];
         aux.latitud = sismos[2];
@@ -52,20 +52,37 @@ export const getSismos = async (req, res) => {
         objeto.push(aux);
       });
 
-    //Consulta de prueba, agrego el ultimo temblor registrado
-    // const consulta = await Pool.query(
-    //   "INSERT INTO sismos (fecha_local,fecha_utc,latitud,longitud,profundidad,magnitud,agencia,referencia_geografica) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)",
-    //   [
-    //     infoSismos[0].fecha_local,
-    //     infoSismos[0].fecha_utc,
-    //     infoSismos[0].latitud,
-    //     infoSismos[0].longitud,
-    //     infoSismos[0].profundidad,
-    //     infoSismos[0].magnitud,
-    //     infoSismos[0].agencia,
-    //     infoSismos[0].referencia_geografica,
-    //   ]
-    // );
+    const ultimafecha = [];
+
+  const Ingresobase = await Pool.query("select fecha_local from sismos order by id_sismo desc limit 1");
+      if(Ingresobase.rows[0] != undefined){          //Si Ingresobase.rows es undefined indica que la tabla está vacía, entonces se omite este paso
+      const fecha = Ingresobase.rows[0].fecha_local;    //Guardado en variable de la fecha del ultimo sismo registrado en la BD
+      for (var j=0; j<objeto.length; j++){
+      if(objeto[j].fecha_local === fecha){
+        while(objeto.length != j ){        //Se eliminan los datos que ya se encuentran en la BD para que no se agreguen, de esta forma se agregan los más recientes al ultimo registrado
+        objeto.pop();
+      }
+      }
+  }}
+  //Consulta de prueba, agrego el ultimo temblor registrado
+  if(objeto.length!=0){           //Si el arreglo tiene algun registro que no está en la base de datos se agrega
+  for (var i=objeto.length-1; i>=0; i--){
+    const consulta = await Pool.query(
+     "INSERT INTO sismos (fecha_local,fecha_utc,latitud,longitud,profundidad,magnitud,agencia,referencia_geografica) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)",
+     [
+       objeto[i].fecha_local,
+       objeto[i].fecha_utc,
+       objeto[i].latitud,
+       objeto[i].longitud,
+       objeto[i].profundidad,
+       objeto[i].magnitud,
+       objeto[i].agencia,
+       objeto[i].referencia_geografica,
+     ]
+     );}}
+  else {
+    objeto[0]= "Nada que agregar";
+  }
 
     res.status(200).json({
       msg: "API funcionando",
