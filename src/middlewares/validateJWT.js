@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import Pool from "../database/connection";
+import zonaLocal from "../helpers/fecha";
 
 export const validateJwt = async (req, res, next) => {
   //Obtengo el token del header
@@ -8,7 +9,10 @@ export const validateJwt = async (req, res, next) => {
   //Caso de que no se haya enviado el token
   if (!token) {
     return res.status(401).json({
-      msg: "No hay token en la petición",
+      status: "401 (Sin autorización)",
+      tipoMIME: "application/json",
+      fecha: zonaLocal(),
+      mensaje: "No hay token en la petición",
     });
   }
 
@@ -27,8 +31,11 @@ export const validateJwt = async (req, res, next) => {
     // console.log(userAuth);
     //Verifico si el usuario auth existe
     if (userAuth.rowCount == 0) {
-      return res.status(401).json({
-        msg: "Token no valido - usuario no existe en BD",
+      return res.status(403).json({
+        status: "403 (Sin permiso)",
+        tipoMIME: "application/json",
+        fecha: zonaLocal(),
+        mensaje: "Usuario no existe en BD",
       });
     }
 
@@ -38,7 +45,10 @@ export const validateJwt = async (req, res, next) => {
   } catch (error) {
     console.log(error);
     res.status(401).json({
-      msg: "Token no valido",
+      status: "401 (Sin autorización)",
+      tipoMIME: "application/json",
+      fecha: zonaLocal(),
+      mensaje: "Token no valido",
     });
   }
 };

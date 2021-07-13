@@ -2,6 +2,7 @@ import { Router } from "express";
 
 //middleware
 import { validateJwt } from "../middlewares/validateJWT";
+import { validarURL } from "../middlewares/validation";
 //Controllers
 import { getSismos } from "../controllers/earthquakes-controllers";
 //Rutas

@@ -8,6 +8,15 @@ import earthquakesRoutes from "./routes/earthquakes";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
 
+//scrapping
+import scrapping from "./controllers/scrapping";
+
+//Automatización del scrapping cada 30 minutos
+const tiempo = 1000;
+setInterval(() => {
+  scrapping(), console.log("scrapping");
+}, tiempo);
+
 //Variables ocultas .env
 dotenv.config();
 
