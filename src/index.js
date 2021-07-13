@@ -12,7 +12,7 @@ import userRoutes from "./routes/user";
 import scrapping from "./controllers/scrapping";
 
 //Automatización del scrapping cada 30 minutos
-const tiempo = 1000;
+const tiempo = 1000 * 60 * 30 ;
 setInterval(() => {
   scrapping(), console.log("scrapping");
 }, tiempo);

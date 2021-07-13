@@ -61,13 +61,12 @@ export const scrapping = async () => {
       for (var j = 0; j < objeto.length; j++) {
         if (objeto[j].fecha_local === fecha) {
           while (objeto.length != j) {
-            //Se eliminan los datos que ya se encuentran en la BD para que no se agreguen, de esta forma se agregan los más recientes al ultimo registrado
+            //Se eliminan los datos en el arreglo que ya se encuentran en la BD para que no se agreguen, de esta forma se agregan los más recientes al ultimo registrado
             objeto.pop();
           }
         }
       }
     }
-    //Consulta de prueba, agrego el ultimo temblor registrado
     if (objeto.length != 0) {
       //Si el arreglo tiene algun registro que no está en la base de datos se agrega
       for (var i = objeto.length - 1; i >= 0; i--) {
