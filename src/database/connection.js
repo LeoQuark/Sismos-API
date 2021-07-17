@@ -2,9 +2,9 @@ import pg from "pg";
 
 //Conexion con la base de datos
 const pool = new pg.Pool({
-  host: "localhost",
+  host: "db",
   user: "postgres",
-  password: "251100",
+  password: "postgres",
   database: "sismoschile",
   port: "5432",
 });
