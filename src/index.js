@@ -31,12 +31,12 @@ app.use(express.json());
 app.use(cors());
 
 //Rutas iniciales de la API
-app.use("/api", earthquakesRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/usuario", userRoutes);
+app.use("/grupo-m", earthquakesRoutes);
+app.use("/grupo-m/auth", authRoutes);
+app.use("/grupo-m/usuario", userRoutes);
 
 //Se declara el puerto en el que correrá el servidor por medio de .env o asignandole por defecto el port:4000
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 18086;
 //Se inicia el servidor en determinado puerto (port)
 app.listen(PORT, () => {
   try {
